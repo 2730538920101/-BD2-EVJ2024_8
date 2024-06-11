@@ -19,7 +19,7 @@ CREATE TABLE HABITACION(
 CREATE TABLE LOG_HABITACION(
     id_log_habitacion INT AUTO_INCREMENT PRIMARY KEY,
     idHabitacion INT,  -- Definido solo el campo
-    timestampx DATETIME,  -- Cambiado a DATETIME
+    timestampx VARCHAR(100),  -- Cambiado a VARCHAR(100)
     statusx VARCHAR(45),
     FOREIGN KEY (idHabitacion) REFERENCES HABITACION(idHabitacion)  -- Definición de la clave externa
 );
@@ -27,7 +27,7 @@ CREATE TABLE LOG_HABITACION(
 -- Creación de la tabla LOG_ACTIVIDAD
 CREATE TABLE LOG_ACTIVIDAD(
     id_log_actividad INT AUTO_INCREMENT PRIMARY KEY,
-    timestampx DATETIME,  -- Cambiado a DATETIME
+    timestampx VARCHAR(100),  -- Cambiado a VARCHAR(100)
     actividad VARCHAR(500),
     idPaciente INT,
     idHabitacion INT,

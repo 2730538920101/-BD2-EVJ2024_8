@@ -1,7 +1,7 @@
 USE PRACTICA1;
 -- INSERTAR DATOS EN HABITACION --
 
-LOAD DATA LOCAL INFILE 'C:/Users/OMEN/OneDrive/Documentos/Bases2/Practica1Docs/CSV/Habitaciones.csv'
+LOAD DATA LOCAL INFILE '<<CARPETA DONDE ESTA EL ARCHIVO>>Habitaciones.csv'
 INTO TABLE HABITACION
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
@@ -13,9 +13,9 @@ SELECT * FROM HABITACION;
 
 -- INSERTAR DATOS EN PACIENTES
 
-LOAD DATA LOCAL INFILE 'C:/Users/OMEN/OneDrive/Documentos/Bases2/Practica1Docs/CSV/Pacientes.csv'
+LOAD DATA LOCAL INFILE '<<CARPETA DONDE ESTA EL ARCHIVO>>Pacientes.csv'
 INTO TABLE PACIENTE
-FIELDS TERMINATED BY ','
+FIELDS TERMINATED BY ';'
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 LINES
@@ -25,36 +25,39 @@ SELECT * FROM PACIENTE;
 
 -- INSERTAR DATOS EN LOG_ACTIVIDADES 1 --
 
-LOAD DATA LOCAL INFILE 'C:/Users/OMEN/OneDrive/Documentos/Bases2/Practica1Docs/CSV/LogActividades1.csv'
+LOAD DATA LOCAL INFILE '<<CARPETA DONDE ESTA EL ARCHIVO>>LogActividades1.csv'
 INTO TABLE LOG_ACTIVIDAD
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 LINES
-(timestampx, actividad, idHabitacion, idPaciente);
+(@timestampx, actividad, idHabitacion, idPaciente)
+SET timestampx = STR_TO_DATE(@timestampx, '%m/%d/%Y %h:%i:%s %p');
 
 SELECT * FROM LOG_ACTIVIDAD;
 
 -- INSERTAR DATOS EN LOG_ACTIVIDADES 2 --
 
-LOAD DATA LOCAL INFILE 'C:/Users/OMEN/OneDrive/Documentos/Bases2/Practica1Docs/CSV/LogActividades2.csv'
+LOAD DATA LOCAL INFILE '<<CARPETA DONDE ESTA EL ARCHIVO>>LogActividades2.csv'
 INTO TABLE LOG_ACTIVIDAD
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 LINES
-(timestampx, actividad, idHabitacion, idPaciente);
+(@timestampx, actividad, idHabitacion, idPaciente)
+SET timestampx = STR_TO_DATE(@timestampx, '%m/%d/%Y %h:%i:%s %p');
 
 SELECT * FROM LOG_ACTIVIDAD;
 
 -- INSERTAR DATOS EN LOG_HABITACION --
 
-LOAD DATA LOCAL INFILE 'C:/Users/OMEN/OneDrive/Documentos/Bases2/Practica1Docs/CSV/LogHabitacion.csv'
+LOAD DATA LOCAL INFILE '<<CARPETA DONDE ESTA EL ARCHIVO>>LogHabitacion.csv'
 INTO TABLE LOG_HABITACION
 FIELDS TERMINATED BY ','
 ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 LINES
-(idHabitacion, timestampx, statusx);
+(idHabitacion, @timestampx, statusx)
+SET timestampx = STR_TO_DATE(@timestampx, '%m/%d/%Y %h:%i:%s %p');
 
 SELECT * FROM LOG_HABITACION;

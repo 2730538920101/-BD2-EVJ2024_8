@@ -16,26 +16,9 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `LOG_HABITACION`
---
-
-DROP TABLE IF EXISTS `LOG_HABITACION`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `LOG_HABITACION` (
-  `idLogHabitacion` int NOT NULL AUTO_INCREMENT,
-  `idHabitacion` int DEFAULT NULL,
-  `timestampx` timestamp NULL DEFAULT NULL,
-  `statusx` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`idLogHabitacion`),
-  KEY `idHabitacion` (`idHabitacion`),
-  CONSTRAINT `LOG_HABITACION_ibfk_1` FOREIGN KEY (`idHabitacion`) REFERENCES `HABITACION` (`idHabitacion`)
-) ENGINE=InnoDB AUTO_INCREMENT=65536 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `LOG_HABITACION`
 --
+-- WHERE:  idLogHabitacion > 0
 
 LOCK TABLES `LOG_HABITACION` WRITE;
 /*!40000 ALTER TABLE `LOG_HABITACION` DISABLE KEYS */;
@@ -53,4 +36,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-12  5:22:27
+-- Dump completed on 2024-06-12  5:22:23

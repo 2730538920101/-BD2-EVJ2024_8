@@ -9,15 +9,20 @@
 
 ### Full Backup
 ```console
-mysqldump -u USUARIO -p CONTRASEÑA DB > Ruta/nombre_fullbackup.sql
+mysqldump -u USUARIO -pCONTRASEÑA DB > Ruta/nombre_fullbackup.sql
 ```
 
-### Incremental Backup
+### Backup de una tabla
 ```console
-mysqldump -u USUARIO -p CONTRASEÑA DB TABLA > Ruta/incremental_backup_tabla.sql
+mysqldump -u USUARIO -pCONTRASEÑA DB TABLA > Ruta/incremental_backup_tabla.sql
+```
+
+### Backup de una porción de datos
+```console
+mysqldump -u USUARIO -pCONTRASEÑA DB TABLA --no-create-info --where="id > N" > Ruta/incremental2.sql
 ```
 
 ### Restaurar Backup
 ```console
-Comando: mysql -u USUARIO -p CONTRASEÑA db < Ruta/nombre_backup.sql
+Comando: mysql -u USUARIO -pCONTRASEÑA db < Ruta/nombre_backup.sql
 ```

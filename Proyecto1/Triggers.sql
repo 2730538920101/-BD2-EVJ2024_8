@@ -1,25 +1,32 @@
+------------------------------------------------------------------------------------------------------------------------
+--* Trigger para la tabla Usuarios
 USE IngenieriaBD;
 GO
---* Trigger para la tabla Usuarios
+
 CREATE TRIGGER Trigger1_Usuarios
-ON Usuarios AFTER INSERT, UPDATE, DELETE
+ON proyecto1.Usuarios AFTER INSERT, UPDATE, DELETE
 AS
 BEGIN
-    IF EXISTS (SELECT * FROM INSERTED) AND EXISTS (SELECT * FROM DELETED)
-    BEGIN
-        --* Se realizó una operación de actualización
-        INSERT INTO HistoryLog(description_, type_) VALUES('SE REALIZO UNA ACCION (UPDATE) EN LA TABLA Usuarios', 'UPDATE')
-    END
-    ELSE IF EXISTS (SELECT * FROM INSERTED)
-    BEGIN
-        --* Se realizó una operación de inserción
-        INSERT INTO HistoryLog(description_, type_) VALUES('SE REALIZO UNA ACCION (INSERT) EN LA TABLA Usuarios', 'INSERT')
-    END
+
+    -- Se declaran las variables
+    DECLARE @Operacion VARCHAR(20);
+    DECLARE @Descripcion VARCHAR(100);
+    DECLARE @NombreTabla VARCHAR(128);
+
+    -- Asigna el nombre de la tabla
+    SET @NombreTabla = 'Usuarios';
+
+    -- Determinando el tipo de operacion
+    IF EXISTS (SELECT * FROM INSERTED)
+        SET @Operacion = 'INSERT';
     ELSE IF EXISTS (SELECT * FROM DELETED)
-    BEGIN
-        --* Se realizó una operación de eliminación
-        INSERT INTO HistoryLog(description_, type_) VALUES('SE REALIZO UNA ACCION (DELETE) EN LA TABLA Usuarios', 'DELETE')
-    END
+        SET @Operacion = 'DELETE';
+    ELSE
+        SET @Operacion = 'UPDATE';
+
+    -- Insertando en la tabla HistoryLog
+    SET @Descripcion = 'Operacion ' + @Operacion + ' en la tabla ' + @NombreTabla + ' Exitosa';
+    INSERT INTO proyecto1.HistoryLog([Date], Description) VALUES (GETDATE(), @Descripcion);
 END;
 GO
 ------------------------------------------------------------------------------------------------------------------------
@@ -28,24 +35,29 @@ USE IngenieriaBD;
 GO
 
 CREATE TRIGGER Trigger1_Roles
-ON Roles AFTER INSERT, UPDATE, DELETE
+ON proyecto1.Roles AFTER INSERT, UPDATE, DELETE
 AS
 BEGIN
-    IF EXISTS (SELECT * FROM INSERTED) AND EXISTS (SELECT * FROM DELETED)
-    BEGIN
-        --* Se realizó una operación de actualización
-        INSERT INTO HistoryLog(description_, type_) VALUES('SE REALIZO UNA ACCION (UPDATE) EN LA TABLA Roles', 'UPDATE')
-    END
-    ELSE IF EXISTS (SELECT * FROM INSERTED)
-    BEGIN
-        --* Se realizó una operación de inserción
-        INSERT INTO HistoryLog(description_, type_) VALUES('SE REALIZO UNA ACCION (INSERT) EN LA TABLA Roles', 'INSERT')
-    END
+
+    -- Se declaran las variables
+    DECLARE @Operacion VARCHAR(20);
+    DECLARE @Descripcion VARCHAR(100);
+    DECLARE @NombreTabla VARCHAR(128);
+
+    -- Asigna el nombre de la tabla
+    SET @NombreTabla = 'Roles';
+
+    -- Determinando el tipo de operacion
+    IF EXISTS (SELECT * FROM INSERTED)
+        SET @Operacion = 'INSERT';
     ELSE IF EXISTS (SELECT * FROM DELETED)
-    BEGIN
-        --* Se realizó una operación de eliminación
-        INSERT INTO HistoryLog(description_, type_) VALUES('SE REALIZO UNA ACCION (DELETE) EN LA TABLA Roles', 'DELETE')
-    END
+        SET @Operacion = 'DELETE';
+    ELSE
+        SET @Operacion = 'UPDATE';
+
+    -- Insertando en la tabla HistoryLog
+    SET @Descripcion = 'Operacion ' + @Operacion + ' en la tabla ' + @NombreTabla + ' Exitosa';
+    INSERT INTO proyecto1.HistoryLog([Date], Description) VALUES (GETDATE(), @Descripcion);
 END;
 GO
 ------------------------------------------------------------------------------------------------------------------------
@@ -54,213 +66,245 @@ USE IngenieriaBD;
 GO
 
 CREATE TRIGGER Trigger1_UsuarioRole
-ON UsuarioRole AFTER INSERT, UPDATE, DELETE
+ON proyecto1.UsuarioRole AFTER INSERT, UPDATE, DELETE
 AS
 BEGIN
-    IF EXISTS (SELECT * FROM INSERTED) AND EXISTS (SELECT * FROM DELETED)
-    BEGIN
-        --* Se realizó una operación de actualización
-        INSERT INTO HistoryLog(description_, type_) VALUES('SE REALIZO UNA ACCION (UPDATE) EN LA TABLA UsuarioRole', 'UPDATE')
-    END
-    ELSE IF EXISTS (SELECT * FROM INSERTED)
-    BEGIN
-        --* Se realizó una operación de inserción
-        INSERT INTO HistoryLog(description_, type_) VALUES('SE REALIZO UNA ACCION (INSERT) EN LA TABLA UsuarioRole', 'INSERT')
-    END
+
+    -- Se declaran las variables
+    DECLARE @Operacion VARCHAR(20);
+    DECLARE @Descripcion VARCHAR(100);
+    DECLARE @NombreTabla VARCHAR(128);
+
+    -- Asigna el nombre de la tabla
+    SET @NombreTabla = 'UsuarioRole';
+
+    -- Determinando el tipo de operacion
+    IF EXISTS (SELECT * FROM INSERTED)
+        SET @Operacion = 'INSERT';
     ELSE IF EXISTS (SELECT * FROM DELETED)
-    BEGIN
-        --* Se realizó una operación de eliminación
-        INSERT INTO HistoryLog(description_, type_) VALUES('SE REALIZO UNA ACCION (DELETE) EN LA TABLA UsuarioRole', 'DELETE')
-    END
+        SET @Operacion = 'DELETE';
+    ELSE
+        SET @Operacion = 'UPDATE';
+
+    -- Insertando en la tabla HistoryLog
+    SET @Descripcion = 'Operacion ' + @Operacion + ' en la tabla ' + @NombreTabla + ' Exitosa';
+    INSERT INTO proyecto1.HistoryLog([Date], Description) VALUES (GETDATE(), @Descripcion);
 END;
 GO
 ------------------------------------------------------------------------------------------------------------------------
-
 --* Trigger para la tabla Course
 USE IngenieriaBD;
 GO
 
 CREATE TRIGGER Trigger1_Course
-ON Course AFTER INSERT, UPDATE, DELETE
+ON proyecto1.Course AFTER INSERT, UPDATE, DELETE
 AS
 BEGIN
-    IF EXISTS (SELECT * FROM INSERTED) AND EXISTS (SELECT * FROM DELETED)
-    BEGIN
-        --* Se realizó una operación de actualización
-        INSERT INTO HistoryLog(description_, type_) VALUES('SE REALIZO UNA ACCION (UPDATE) EN LA TABLA Course', 'UPDATE')
-    END
-    ELSE IF EXISTS (SELECT * FROM INSERTED)
-    BEGIN
-        --* Se realizó una operación de inserción
-        INSERT INTO HistoryLog(description_, type_) VALUES('SE REALIZO UNA ACCION (INSERT) EN LA TABLA Course', 'INSERT')
-    END
+
+    -- Se declaran las variables
+    DECLARE @Operacion VARCHAR(20);
+    DECLARE @Descripcion VARCHAR(100);
+    DECLARE @NombreTabla VARCHAR(128);
+
+    -- Asigna el nombre de la tabla
+    SET @NombreTabla = 'Course';
+
+    -- Determinando el tipo de operacion
+    IF EXISTS (SELECT * FROM INSERTED)
+        SET @Operacion = 'INSERT';
     ELSE IF EXISTS (SELECT * FROM DELETED)
-    BEGIN
-        --* Se realizó una operación de eliminación
-        INSERT INTO HistoryLog(description_, type_) VALUES('SE REALIZO UNA ACCION (DELETE) EN LA TABLA Course', 'DELETE')
-    END
+        SET @Operacion = 'DELETE';
+    ELSE
+        SET @Operacion = 'UPDATE';
+
+    -- Insertando en la tabla HistoryLog
+    SET @Descripcion = 'Operacion ' + @Operacion + ' en la tabla ' + @NombreTabla + ' Exitosa';
+    INSERT INTO proyecto1.HistoryLog([Date], Description) VALUES (GETDATE(), @Descripcion);
 END;
 GO
-
 ------------------------------------------------------------------------------------------------------------------------
 --* Trigger para la tabla ProfileStudent
 USE IngenieriaBD;
 GO
 
 CREATE TRIGGER Trigger1_ProfileStudent
-ON ProfileStudent AFTER INSERT, UPDATE, DELETE
+ON proyecto1.ProfileStudent AFTER INSERT, UPDATE, DELETE
 AS
 BEGIN
-    IF EXISTS (SELECT * FROM INSERTED) AND EXISTS (SELECT * FROM DELETED)
-    BEGIN
-        --* Se realizó una operación de actualización
-        INSERT INTO HistoryLog(description_, type_) VALUES('SE REALIZO UNA ACCION (UPDATE) EN LA TABLA ProfileStudent', 'UPDATE')
-    END
-    ELSE IF EXISTS (SELECT * FROM INSERTED)
-    BEGIN
-        --* Se realizó una operación de inserción
-        INSERT INTO HistoryLog(description_, type_) VALUES('SE REALIZO UNA ACCION (INSERT) EN LA TABLA ProfileStudent', 'INSERT')
-    END
+
+    -- Se declaran las variables
+    DECLARE @Operacion VARCHAR(20);
+    DECLARE @Descripcion VARCHAR(100);
+    DECLARE @NombreTabla VARCHAR(128);
+
+    -- Asigna el nombre de la tabla
+    SET @NombreTabla = 'ProfileStudent';
+
+    -- Determinando el tipo de operacion
+    IF EXISTS (SELECT * FROM INSERTED)
+        SET @Operacion = 'INSERT';
     ELSE IF EXISTS (SELECT * FROM DELETED)
-    BEGIN
-        --* Se realizó una operación de eliminación
-        INSERT INTO HistoryLog(description_, type_) VALUES('SE REALIZO UNA ACCION (DELETE) EN LA TABLA ProfileStudent', 'DELETE')
-    END
+        SET @Operacion = 'DELETE';
+    ELSE
+        SET @Operacion = 'UPDATE';
+
+    -- Insertando en la tabla HistoryLog
+    SET @Descripcion = 'Operacion ' + @Operacion + ' en la tabla ' + @NombreTabla + ' Exitosa';
+    INSERT INTO proyecto1.HistoryLog([Date], Description) VALUES (GETDATE(), @Descripcion);
 END;
 GO
-
 ------------------------------------------------------------------------------------------------------------------------
 --* Trigger para la tabla TutorProfile
 USE IngenieriaBD;
 GO
 
 CREATE TRIGGER Trigger1_TutorProfile
-ON TutorProfile AFTER INSERT, UPDATE, DELETE
+ON proyecto1.TutorProfile AFTER INSERT, UPDATE, DELETE
 AS
 BEGIN
-    IF EXISTS (SELECT * FROM INSERTED) AND EXISTS (SELECT * FROM DELETED)
-    BEGIN
-        --* Se realizó una operación de actualización
-        INSERT INTO HistoryLog(description_, type_) VALUES('SE REALIZO UNA ACCION (UPDATE) EN LA TABLA TutorProfile', 'UPDATE')
-    END
-    ELSE IF EXISTS (SELECT * FROM INSERTED)
-    BEGIN
-        --* Se realizó una operación de inserción
-        INSERT INTO HistoryLog(description_, type_) VALUES('SE REALIZO UNA ACCION (INSERT) EN LA TABLA TutorProfile', 'INSERT')
-    END
+
+    -- Se declaran las variables
+    DECLARE @Operacion VARCHAR(20);
+    DECLARE @Descripcion VARCHAR(100);
+    DECLARE @NombreTabla VARCHAR(128);
+
+    -- Asigna el nombre de la tabla
+    SET @NombreTabla = 'TutorProfile';
+
+    -- Determinando el tipo de operacion
+    IF EXISTS (SELECT * FROM INSERTED)
+        SET @Operacion = 'INSERT';
     ELSE IF EXISTS (SELECT * FROM DELETED)
-    BEGIN
-        --* Se realizó una operación de eliminación
-        INSERT INTO HistoryLog(description_, type_) VALUES('SE REALIZO UNA ACCION (DELETE) EN LA TABLA TutorProfile', 'DELETE')
-    END
+        SET @Operacion = 'DELETE';
+    ELSE
+        SET @Operacion = 'UPDATE';
+
+    -- Insertando en la tabla HistoryLog
+    SET @Descripcion = 'Operacion ' + @Operacion + ' en la tabla ' + @NombreTabla + ' Exitosa';
+    INSERT INTO proyecto1.HistoryLog([Date], Description) VALUES (GETDATE(), @Descripcion);
 END;
 GO
-
 ------------------------------------------------------------------------------------------------------------------------
 --* Trigger para la tabla CourseTutor
 USE IngenieriaBD;
 GO
 
 CREATE TRIGGER Trigger1_CourseTutor
-ON CourseTutor AFTER INSERT, UPDATE, DELETE
+ON proyecto1.CourseTutor AFTER INSERT, UPDATE, DELETE
 AS
 BEGIN
-    IF EXISTS (SELECT * FROM INSERTED) AND EXISTS (SELECT * FROM DELETED)
-    BEGIN
-        --* Se realizó una operación de actualización
-        INSERT INTO HistoryLog(description_, type_) VALUES('SE REALIZO UNA ACCION (UPDATE) EN LA TABLA CourseTutor', 'UPDATE')
-    END
-    ELSE IF EXISTS (SELECT * FROM INSERTED)
-    BEGIN
-        --* Se realizó una operación de inserción
-        INSERT INTO HistoryLog(description_, type_) VALUES('SE REALIZO UNA ACCION (INSERT) EN LA TABLA CourseTutor', 'INSERT')
-    END
+
+    -- Se declaran las variables
+    DECLARE @Operacion VARCHAR(20);
+    DECLARE @Descripcion VARCHAR(100);
+    DECLARE @NombreTabla VARCHAR(128);
+
+    -- Asigna el nombre de la tabla
+    SET @NombreTabla = 'CourseTutor';
+
+    -- Determinando el tipo de operacion
+    IF EXISTS (SELECT * FROM INSERTED)
+        SET @Operacion = 'INSERT';
     ELSE IF EXISTS (SELECT * FROM DELETED)
-    BEGIN
-        --* Se realizó una operación de eliminación
-        INSERT INTO HistoryLog(description_, type_) VALUES('SE REALIZO UNA ACCION (DELETE) EN LA TABLA CourseTutor', 'DELETE')
-    END
+        SET @Operacion = 'DELETE';
+    ELSE
+        SET @Operacion = 'UPDATE';
+
+    -- Insertando en la tabla HistoryLog
+    SET @Descripcion = 'Operacion ' + @Operacion + ' en la tabla ' + @NombreTabla + ' Exitosa';
+    INSERT INTO proyecto1.HistoryLog([Date], Description) VALUES (GETDATE(), @Descripcion);
 END;
 GO
-
 ------------------------------------------------------------------------------------------------------------------------
 --* Trigger para la tabla CourseAssignment
 USE IngenieriaBD;
 GO
 
 CREATE TRIGGER Trigger1_CourseAssignment
-ON CourseAssignment AFTER INSERT, UPDATE, DELETE
+ON proyecto1.CourseAssignment AFTER INSERT, UPDATE, DELETE
 AS
 BEGIN
-    IF EXISTS (SELECT * FROM INSERTED) AND EXISTS (SELECT * FROM DELETED)
-    BEGIN
-        --* Se realizó una operación de actualización
-        INSERT INTO HistoryLog(description_, type_) VALUES('SE REALIZO UNA ACCION (UPDATE) EN LA TABLA CourseAssignment', 'UPDATE')
-    END
-    ELSE IF EXISTS (SELECT * FROM INSERTED)
-    BEGIN
-        --* Se realizó una operación de inserción
-        INSERT INTO HistoryLog(description_, type_) VALUES('SE REALIZO UNA ACCION (INSERT) EN LA TABLA CourseAssignment', 'INSERT')
-    END
+
+    -- Se declaran las variables
+    DECLARE @Operacion VARCHAR(20);
+    DECLARE @Descripcion VARCHAR(100);
+    DECLARE @NombreTabla VARCHAR(128);
+
+    -- Asigna el nombre de la tabla
+    SET @NombreTabla = 'CourseAssignment';
+
+    -- Determinando el tipo de operacion
+    IF EXISTS (SELECT * FROM INSERTED)
+        SET @Operacion = 'INSERT';
     ELSE IF EXISTS (SELECT * FROM DELETED)
-    BEGIN
-        --* Se realizó una operación de eliminación
-        INSERT INTO HistoryLog(description_, type_) VALUES('SE REALIZO UNA ACCION (DELETE) EN LA TABLA CourseAssignment', 'DELETE')
-    END
+        SET @Operacion = 'DELETE';
+    ELSE
+        SET @Operacion = 'UPDATE';
+
+    -- Insertando en la tabla HistoryLog
+    SET @Descripcion = 'Operacion ' + @Operacion + ' en la tabla ' + @NombreTabla + ' Exitosa';
+    INSERT INTO proyecto1.HistoryLog([Date], Description) VALUES (GETDATE(), @Descripcion);
 END;
 GO
-
 ------------------------------------------------------------------------------------------------------------------------
 --* Trigger para la tabla TFA
 USE IngenieriaBD;
 GO
 
 CREATE TRIGGER Trigger1_TFA
-ON TFA AFTER INSERT, UPDATE, DELETE
+ON proyecto1.TFA AFTER INSERT, UPDATE, DELETE
 AS
 BEGIN
-    IF EXISTS (SELECT * FROM INSERTED) AND EXISTS (SELECT * FROM DELETED)
-    BEGIN
-        --* Se realizó una operación de actualización
-        INSERT INTO HistoryLog(description_, type_) VALUES('SE REALIZO UNA ACCION (UPDATE) EN LA TABLA TFA', 'UPDATE')
-    END
-    ELSE IF EXISTS (SELECT * FROM INSERTED)
-    BEGIN
-        --* Se realizó una operación de inserción
-        INSERT INTO HistoryLog(description_, type_) VALUES('SE REALIZO UNA ACCION (INSERT) EN LA TABLA TFA', 'INSERT')
-    END
+
+    -- Se declaran las variables
+    DECLARE @Operacion VARCHAR(20);
+    DECLARE @Descripcion VARCHAR(100);
+    DECLARE @NombreTabla VARCHAR(128);
+
+    -- Asigna el nombre de la tabla
+    SET @NombreTabla = 'TFA';
+
+    -- Determinando el tipo de operacion
+    IF EXISTS (SELECT * FROM INSERTED)
+        SET @Operacion = 'INSERT';
     ELSE IF EXISTS (SELECT * FROM DELETED)
-    BEGIN
-        --* Se realizó una operación de eliminación
-        INSERT INTO HistoryLog(description_, type_) VALUES('SE REALIZO UNA ACCION (DELETE) EN LA TABLA TFA', 'DELETE')
-    END
+        SET @Operacion = 'DELETE';
+    ELSE
+        SET @Operacion = 'UPDATE';
+
+    -- Insertando en la tabla HistoryLog
+    SET @Descripcion = 'Operacion ' + @Operacion + ' en la tabla ' + @NombreTabla + ' Exitosa';
+    INSERT INTO proyecto1.HistoryLog([Date], Description) VALUES (GETDATE(), @Descripcion);
 END;
 GO
-
-
 ------------------------------------------------------------------------------------------------------------------------
 --* Trigger para la tabla Notification
 USE IngenieriaBD;
 GO
 
 CREATE TRIGGER Trigger1_Notification
-ON Notification AFTER INSERT, UPDATE, DELETE
+ON proyecto1.Notification AFTER INSERT, UPDATE, DELETE
 AS
 BEGIN
-    IF EXISTS (SELECT * FROM INSERTED) AND EXISTS (SELECT * FROM DELETED)
-    BEGIN
-        --* Se realizó una operación de actualización
-        INSERT INTO HistoryLog(description_, type_) VALUES('SE REALIZO UNA ACCION (UPDATE) EN LA TABLA Notification', 'UPDATE')
-    END
-    ELSE IF EXISTS (SELECT * FROM INSERTED)
-    BEGIN
-        --* Se realizó una operación de inserción
-        INSERT INTO HistoryLog(description_, type_) VALUES('SE REALIZO UNA ACCION (INSERT) EN LA TABLA Notification', 'INSERT')
-    END
+
+    -- Se declaran las variables
+    DECLARE @Operacion VARCHAR(20);
+    DECLARE @Descripcion VARCHAR(100);
+    DECLARE @NombreTabla VARCHAR(128);
+
+    -- Asigna el nombre de la tabla
+    SET @NombreTabla = 'Notification';
+
+    -- Determinando el tipo de operacion
+    IF EXISTS (SELECT * FROM INSERTED)
+        SET @Operacion = 'INSERT';
     ELSE IF EXISTS (SELECT * FROM DELETED)
-    BEGIN
-        --* Se realizó una operación de eliminación
-        INSERT INTO HistoryLog(description_, type_) VALUES('SE REALIZO UNA ACCION (DELETE) EN LA TABLA Notification', 'DELETE')
-    END
+        SET @Operacion = 'DELETE';
+    ELSE
+        SET @Operacion = 'UPDATE';
+
+    -- Insertando en la tabla HistoryLog
+    SET @Descripcion = 'Operacion ' + @Operacion + ' en la tabla ' + @NombreTabla + ' Exitosa';
+    INSERT INTO proyecto1.HistoryLog([Date], Description) VALUES (GETDATE(), @Descripcion);
 END;
 GO

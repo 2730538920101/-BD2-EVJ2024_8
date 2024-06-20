@@ -10,46 +10,67 @@ BEGIN
 
     DECLARE @Description NVARCHAR(MAX);
 
-    BEGIN TRANSACTION
-
     BEGIN TRY
+
+        -- Iniciar transaccion
+        BEGIN TRANSACTION
+
+        -- Correo vacio
+        IF (@Email IS NULL OR @Email = '')
+        BEGIN
+            SET @Description = 'El campo correo no puede ir vacio';
+            RAISERROR(@Description, 16, 1);
+            RETURN;
+        END
+
+        -- Codigo de curso negativo
+        IF @CodCourse < 0
+        BEGIN
+            -- MARCAR ERROR
+            SET @Description = 'El campo codigo de curso no puede ser negativo';
+            RAISERROR(@Description, 16, 1);
+            RETURN;
+        END
+
+        -- Verificacion de existencia de curso
+        IF NOT EXISTS (SELECT 1 FROM Course WHERE CodCourse = @CodCourse)
+        BEGIN
+            -- MARCAR ERROR
+            SET @Description = 'El curso no existe';
+            RAISERROR(@Description, 16, 1);
+            RETURN;
+        END
 
         -- Verificar si el usuario existe y tiene una cuenta activa
         IF NOT EXISTS (SELECT 1 FROM Usuarios WHERE Email = @Email AND EmailConfirmed = 1)
         BEGIN
-            -- CUALQUIER PROCESO ANTERIOR SE DESHACE
-            ROLLBACK TRANSACTION
             -- MARCAR ERROR
-            SET @Description = 'Cambio de Rol Fallido: El usuario no existe o no tiene una cuenta activa';
-            INSERT INTO proyecto1.HistoryLog ([Date], Description)
-            VALUES (GETDATE(), @Description);
+            SET @Description = 'El usuario no existe o no tiene una cuenta activa';
             RAISERROR(@Description, 16, 1);
             RETURN;
         END
 
         -- Obtener el ID del usuario
-        DECLARE @UsuarioId INT
-        SELECT @UsuarioId = UserId FROM Usuarios WHERE Email = @Email
+        DECLARE @UsuarioId UNIQUEIDENTIFIER
+        SELECT @UsuarioId = Id FROM Usuarios WHERE Email = @Email
 
         -- Agregar el rol de tutor al usuario
-        INSERT INTO UsuarioRole (UserId, IdRol)
-        SELECT @UsuarioId, IdRol FROM Roles WHERE RoleName = 'Tutor'
+        INSERT INTO UsuarioRole (UserId, RoleId, IsLatestVersion)
+        SELECT @UsuarioId, Id, 1 FROM Roles WHERE RoleName = 'Tutor'
 
         -- Insertar perfil de tutor
-        INSERT INTO TutorProfile (UserId) VALUES (@UsuarioId)
+        INSERT INTO TutorProfile (UserId, TutorCode) VALUES (@UsuarioId, @UsuarioId)
 
         -- Asignar el curso al tutor
-        INSERT INTO CourseTutor (IdTutorProfile, CodCourse)
-        SELECT IdTutorProfile, @CodCourse FROM TutorProfile WHERE UserId = @UsuarioId
+        INSERT INTO CourseTutor (TutorId, CourseCodCourse) VALUES (@UsuarioId, @CodCourse);
 
         -- Insertar notificacion de cambio de rol
-        INSERT INTO Notification (UserId, Message)
-        VALUES (@UsuarioId, 'Se te ha asignado el rol de tutor para el curso ' + (SELECT Name FROM Course WHERE CodCourse = @CodCourse))
+        INSERT INTO Notification (UserId, Message, [Date])
+        VALUES (@UsuarioId, 'Se te ha asignado el rol de tutor para el curso ' + (SELECT Name FROM Course WHERE CodCourse = @CodCourse), GETDATE())
 
         -- Mensaje de exito
         SET @Description = 'Cambio de Rol Exitoso';
-        INSERT INTO proyecto1.HistoryLog ([Date], Description)
-        VALUES (GETDATE(), @Description);
+        INSERT INTO proyecto1.HistoryLog ([Date], Description) VALUES (GETDATE(), @Description);
         PRINT @Description;
 
         -- Confirmar transaccion
@@ -57,11 +78,13 @@ BEGIN
     END TRY
     BEGIN CATCH
         -- CUALQUIER PROCESO ANTERIOR SE DESHACE
-        ROLLBACK TRANSACTION;
+        IF @@TRANCOUNT > 0
+        BEGIN
+            ROLLBACK TRANSACTION;
+        END
         -- MARCAR ERROR
-        SET @Description = 'Cambio de Roles Fallido: ' + ERROR_MESSAGE();
-        INSERT INTO proyecto1.HistoryLog ([Date], Description)
-        VALUES (GETDATE(), @Description);
+        SET @Description = 'Cambio de Role Fallido: ' + ERROR_MESSAGE();
+        INSERT INTO proyecto1.HistoryLog ([Date], Description) VALUES (GETDATE(), @Description);
         RAISERROR(@Description, 16, 1);
     END CATCH
 END

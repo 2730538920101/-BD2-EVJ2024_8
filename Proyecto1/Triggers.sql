@@ -3,6 +3,15 @@
 USE IngenieriaBD;
 GO
 
+/*
+Descripción: Este trigger se activa después de una inserción, actualización o eliminación en la tabla Usuarios.
+Registra la operación realizada en la tabla HistoryLog.
+
+Funcionamiento:
+1. Determina el tipo de operación (INSERT, UPDATE, DELETE)
+2. Crea una descripción de la operación
+3. Inserta un nuevo registro en HistoryLog con la fecha actual y la descripción
+*/
 CREATE TRIGGER Trigger1_Usuarios
 ON proyecto1.Usuarios AFTER INSERT, UPDATE, DELETE
 AS
@@ -34,6 +43,15 @@ GO
 USE IngenieriaBD;
 GO
 
+/*
+Descripción: Este trigger se activa después de una inserción, actualización o eliminación en la tabla Roles.
+Registra la operación realizada en la tabla HistoryLog.
+
+Funcionamiento:
+1. Determina el tipo de operación (INSERT, UPDATE, DELETE)
+2. Crea una descripción de la operación
+3. Inserta un nuevo registro en HistoryLog con la fecha actual y la descripción
+*/
 CREATE TRIGGER Trigger1_Roles
 ON proyecto1.Roles AFTER INSERT, UPDATE, DELETE
 AS
@@ -65,6 +83,15 @@ GO
 USE IngenieriaBD;
 GO
 
+/*
+Descripción: Este trigger se activa después de una inserción, actualización o eliminación en la tabla UsuarioRole.
+Registra la operación realizada en la tabla HistoryLog.
+
+Funcionamiento:
+1. Determina el tipo de operación (INSERT, UPDATE, DELETE)
+2. Crea una descripción de la operación
+3. Inserta un nuevo registro en HistoryLog con la fecha actual y la descripción
+*/
 CREATE TRIGGER Trigger1_UsuarioRole
 ON proyecto1.UsuarioRole AFTER INSERT, UPDATE, DELETE
 AS
@@ -96,6 +123,15 @@ GO
 USE IngenieriaBD;
 GO
 
+/*
+Descripción: Este trigger se activa después de una inserción, actualización o eliminación en la tabla Course.
+Registra la operación realizada en la tabla HistoryLog.
+
+Funcionamiento:
+1. Determina el tipo de operación (INSERT, UPDATE, DELETE)
+2. Crea una descripción de la operación
+3. Inserta un nuevo registro en HistoryLog con la fecha actual y la descripción
+*/
 CREATE TRIGGER Trigger1_Course
 ON proyecto1.Course AFTER INSERT, UPDATE, DELETE
 AS
@@ -127,6 +163,15 @@ GO
 USE IngenieriaBD;
 GO
 
+/*
+Descripción: Este trigger se activa después de una inserción, actualización o eliminación en la tabla ProfileStudent.
+Registra la operación realizada en la tabla HistoryLog.
+
+Funcionamiento:
+1. Determina el tipo de operación (INSERT, UPDATE, DELETE)
+2. Crea una descripción de la operación
+3. Inserta un nuevo registro en HistoryLog con la fecha actual y la descripción
+*/
 CREATE TRIGGER Trigger1_ProfileStudent
 ON proyecto1.ProfileStudent AFTER INSERT, UPDATE, DELETE
 AS
@@ -158,6 +203,15 @@ GO
 USE IngenieriaBD;
 GO
 
+/*
+Descripción: Este trigger se activa después de una inserción, actualización o eliminación en la tabla TutorProfile.
+Registra la operación realizada en la tabla HistoryLog.
+
+Funcionamiento:
+1. Determina el tipo de operación (INSERT, UPDATE, DELETE)
+2. Crea una descripción de la operación
+3. Inserta un nuevo registro en HistoryLog con la fecha actual y la descripción
+*/
 CREATE TRIGGER Trigger1_TutorProfile
 ON proyecto1.TutorProfile AFTER INSERT, UPDATE, DELETE
 AS
@@ -189,6 +243,15 @@ GO
 USE IngenieriaBD;
 GO
 
+/*
+Descripción: Este trigger se activa después de una inserción, actualización o eliminación en la tabla CourseTutor.
+Registra la operación realizada en la tabla HistoryLog.
+
+Funcionamiento:
+1. Determina el tipo de operación (INSERT, UPDATE, DELETE)
+2. Crea una descripción de la operación
+3. Inserta un nuevo registro en HistoryLog con la fecha actual y la descripción
+*/
 CREATE TRIGGER Trigger1_CourseTutor
 ON proyecto1.CourseTutor AFTER INSERT, UPDATE, DELETE
 AS
@@ -220,6 +283,15 @@ GO
 USE IngenieriaBD;
 GO
 
+/*
+Descripción: Este trigger se activa después de una inserción, actualización o eliminación en la tabla CourseAssignment.
+Registra la operación realizada en la tabla HistoryLog.
+
+Funcionamiento:
+1. Determina el tipo de operación (INSERT, UPDATE, DELETE)
+2. Crea una descripción de la operación
+3. Inserta un nuevo registro en HistoryLog con la fecha actual y la descripción
+*/
 CREATE TRIGGER Trigger1_CourseAssignment
 ON proyecto1.CourseAssignment AFTER INSERT, UPDATE, DELETE
 AS
@@ -251,6 +323,15 @@ GO
 USE IngenieriaBD;
 GO
 
+/*
+Descripción: Este trigger se activa después de una inserción, actualización o eliminación en la tabla TFA.
+Registra la operación realizada en la tabla HistoryLog.
+
+Funcionamiento:
+1. Determina el tipo de operación (INSERT, UPDATE, DELETE)
+2. Crea una descripción de la operación
+3. Inserta un nuevo registro en HistoryLog con la fecha actual y la descripción
+*/
 CREATE TRIGGER Trigger1_TFA
 ON proyecto1.TFA AFTER INSERT, UPDATE, DELETE
 AS
@@ -282,6 +363,15 @@ GO
 USE IngenieriaBD;
 GO
 
+/*
+Descripción: Este trigger se activa después de una inserción, actualización o eliminación en la tabla Notification.
+Registra la operación realizada en la tabla HistoryLog.
+
+Funcionamiento:
+1. Determina el tipo de operación (INSERT, UPDATE, DELETE)
+2. Crea una descripción de la operación
+3. Inserta un nuevo registro en HistoryLog con la fecha actual y la descripción
+*/
 CREATE TRIGGER Trigger1_Notification
 ON proyecto1.Notification AFTER INSERT, UPDATE, DELETE
 AS

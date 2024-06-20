@@ -2,6 +2,25 @@ USE IngenieriaBD;
 GO
 ------------------------------------------------------------------------------------------------------------------------
 --* Procedure PR2 - Cambio de Roles
+
+/*
+Descripción: Este procedimiento permite cambiar el rol de un usuario a tutor y asignarle un curso.
+
+Parámetros:
+    @Email VARCHAR(100) - El correo electrónico del usuario.
+    @CodCourse INT - El código del curso que se asignará al tutor.
+
+Funcionamiento:
+1. Verifica que el correo y el código de curso sean válidos.
+2. Comprueba que el usuario exista y tenga una cuenta activa.
+3. Agrega el rol de tutor al usuario.
+4. Crea un perfil de tutor para el usuario.
+5. Asigna el curso especificado al tutor.
+6. Envía una notificación al usuario sobre su nuevo rol.
+
+Manejo de errores:
+- Si ocurre algún error, la transacción se revierte y se registra en el HistoryLog.
+*/
 CREATE PROCEDURE proyecto1.PR2
     @Email VARCHAR(100),
     @CodCourse INT
@@ -91,6 +110,24 @@ END
 GO
 ------------------------------------------------------------------------------------------------------------------------
 --* Procedure PR3 - Asignacion de Curso
+
+/*
+Descripción: Este procedimiento asigna un curso a un estudiante.
+
+Parámetros:
+    @Email VARCHAR(100) - El correo electrónico del estudiante.
+    @CodCourse INT - El código del curso que se asignará al estudiante.
+
+Funcionamiento:
+1. Verifica que el correo y el código de curso sean válidos.
+2. Comprueba que el usuario exista y tenga una cuenta activa.
+3. Verifica que el estudiante tenga suficientes créditos para el curso.
+4. Asigna el curso al estudiante.
+5. Envía notificaciones al tutor y al estudiante sobre la asignación.
+
+Manejo de errores:
+- Si ocurre algún error, la transacción se revierte y se registra en el HistoryLog.
+*/
 CREATE PROCEDURE proyecto1.PR3
     @Email VARCHAR(100),
     @CodCourse INT
@@ -195,6 +232,20 @@ END
 GO
 ------------------------------------------------------------------------------------------------------------------------
 --* Procedure PR4 - Creacion de roles para estudiantes
+
+/*
+Descripción: Este procedimiento crea un nuevo rol en el sistema.
+
+Parámetros:
+    @RoleName NVARCHAR(MAX) - El nombre del nuevo rol.
+
+Funcionamiento:
+1. Verifica que el nombre del rol no esté vacío y solo contenga letras.
+2. Inserta el nuevo rol en la tabla Roles.
+
+Manejo de errores:
+- Si ocurre algún error, la transacción se revierte y se registra en el HistoryLog.
+*/
 CREATE PROCEDURE proyecto1.PR4
     @RoleName NVARCHAR(MAX)
 AS
@@ -250,6 +301,26 @@ END
 GO
 ------------------------------------------------------------------------------------------------------------------------
 --* Procedure PR6 - Validacion de Datos
+
+/*
+Descripción: Este procedimiento valida los datos de entrada para las entidades Usuarios y Course.
+
+Parámetros:
+    @EntityName NVARCHAR(50) - El nombre de la entidad a validar ('Usuarios' o 'Course').
+    @FirstName NVARCHAR(MAX) - El nombre del usuario (solo para 'Usuarios').
+    @LastName NVARCHAR(MAX) - El apellido del usuario (solo para 'Usuarios').
+    @Name NVARCHAR(MAX) - El nombre del curso (solo para 'Course').
+    @CreditsRequired INT - Los créditos requeridos para el curso (solo para 'Course').
+    @IsValid BIT OUTPUT - Variable de salida que indica si los datos son válidos (1) o no (0).
+
+Funcionamiento:
+1. Dependiendo de la entidad, valida los campos correspondientes.
+2. Para 'Usuarios', verifica que FirstName y LastName solo contengan letras.
+3. Para 'Course', verifica que Name solo contenga letras y números, y que CreditsRequired sea numérico.
+
+Uso:
+Este procedimiento es utilizado internamente por otros procedimientos para validar datos.
+*/
 CREATE PROCEDURE proyecto1.PR6
     @EntityName NVARCHAR(50),
     @FirstName NVARCHAR(MAX) = NULL,
@@ -285,6 +356,23 @@ END;
 GO
 ------------------------------------------------------------------------------------------------------------------------
 --* Procedure PR5 - Creacion de Cursos
+
+/*
+Descripción: Este procedimiento crea un nuevo curso en el sistema.
+
+Parámetros:
+    @CodCourse INT - El código del nuevo curso.
+    @Name NVARCHAR(MAX) - El nombre del nuevo curso.
+    @CreditsRequired INT - Los créditos requeridos para el curso.
+
+Funcionamiento:
+1. Valida los datos del curso utilizando el procedimiento PR6.
+2. Verifica que los créditos y el código del curso no sean negativos.
+3. Inserta el nuevo curso en la tabla Course.
+
+Manejo de errores:
+- Si ocurre algún error, la transacción se revierte y se registra en el HistoryLog.
+*/
 CREATE PROCEDURE proyecto1.PR5
     @CodCourse INT,
     @Name NVARCHAR(MAX),
@@ -355,6 +443,29 @@ END;
 GO
 ------------------------------------------------------------------------------------------------------------------------
 --* Procedure PR1 - Registro de Usuarios
+
+/*
+Descripción: Este procedimiento registra un nuevo usuario en el sistema.
+
+Parámetros:
+    @Firstname VARCHAR(max) - El nombre del usuario.
+    @Lastname VARCHAR(max) - El apellido del usuario.
+    @Email VARCHAR(max) - El correo electrónico del usuario.
+    @DateOfBirth datetime2(7) - La fecha de nacimiento del usuario.
+    @Password VARCHAR(max) - La contraseña del usuario.
+    @Credits INT - Los créditos iniciales del usuario.
+
+Funcionamiento:
+1. Valida todos los campos de entrada.
+2. Verifica que el correo no esté ya asociado a otra cuenta.
+3. Crea un nuevo usuario con el rol de estudiante.
+4. Crea un perfil de estudiante para el usuario.
+5. Configura la autenticación de dos factores (TFA) para el usuario.
+6. Envía una notificación al usuario sobre su registro exitoso.
+
+Manejo de errores:
+- Si ocurre algún error, la transacción se revierte y se registra en el HistoryLog.
+*/
 CREATE PROCEDURE proyecto1.PR1
     @Firstname VARCHAR(max),
     @Lastname VARCHAR(max),
